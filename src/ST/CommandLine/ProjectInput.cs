@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Baseline;
 using Oakton;
+using StoryTeller;
 using ST.Client;
 using StoryTeller.Model;
 using StoryTeller.Model.Persistence;
@@ -68,8 +69,9 @@ namespace ST.CommandLine
         public RemoteController BuildRemoteController()
         {
             var path = Path.ToFullPath();
+            var project = Project.LoadForFolder(path);
 
-            var controller = new RemoteController(path);
+            var controller = new RemoteController(project);
             controller.Project.Culture = CultureFlag;
 
 
