@@ -53,13 +53,14 @@ namespace ST.Client
 
         public Project Project { get; }
 
-
+        // TODO -- move this onto Project instead
         public string ConfigFile
         {
             get { return _remoteSetup.Setup.ConfigurationFile; }
             set { _remoteSetup.Setup.ConfigurationFile = value; }
         }
 
+        // TODO -- move this onto Project instead
         public string BinPath
         {
             get { return _remoteSetup.Setup.PrivateBinPath; }
@@ -164,8 +165,6 @@ namespace ST.Client
         {
             var listener = new SystemRecycledListener(Messaging);
 
-            copyStorytellerAssemblyIfNecessary();
-
             _domain = AppDomain.CreateDomain("Storyteller-SpecRunning-Domain", null, _remoteSetup.Setup);
 
 
@@ -189,14 +188,6 @@ namespace ST.Client
             return listener;
         }
 
-        private void copyStorytellerAssemblyIfNecessary()
-        {
-            var directory = _remoteSetup.Setup.ApplicationBase.AppendPath(BinPath);
-            var fileName = GetType().Assembly.GetName().Name + ".dll";
-            var file = directory.AppendPath(fileName);
-            if (!File.Exists(file))
-                File.Copy(GetType().Assembly.Location, file);
-        }
 
         public class ResponseExpression
         {
