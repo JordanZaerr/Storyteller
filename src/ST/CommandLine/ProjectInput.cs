@@ -71,6 +71,11 @@ namespace ST.CommandLine
             var path = Path.ToFullPath();
             var project = Project.LoadForFolder(path);
 
+            if (ConfigFlag.IsNotEmpty())
+            {
+                project.ConfigFile = ConfigFlag;
+            }
+
             var controller = new RemoteController(project);
             controller.Project.Culture = CultureFlag;
 
@@ -103,10 +108,7 @@ namespace ST.CommandLine
             controller.Project.MaxRetries = RetriesFlag;
             controller.Project.Profile = ProfileFlag;
 
-            if (ConfigFlag.IsNotEmpty())
-            {
-                controller.ConfigFile = ConfigFlag;
-            }
+
 
             return controller;
         }
